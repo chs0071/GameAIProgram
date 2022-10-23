@@ -30,6 +30,11 @@ namespace GameAI
 		return *this;
 	}
 
+	FVector2d::operator UE::Math::TVector<double>() const
+	{
+		return FVector(X, Y, 0.0f);
+	}
+
 	void FVector2d::Truncate(double InMax)
 	{
 		if (Length() > InMax)
