@@ -14,5 +14,7 @@ namespace GameAI
 
 		void Truncate(double InMax);
 		FVector2d Perp() const;
+
+		static void WrapAround(FVector2d& InTargetPos, double InMaxX, double InMaxY);
 	};
 }
