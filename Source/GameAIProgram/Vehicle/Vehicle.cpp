@@ -8,6 +8,7 @@ void AVehicle::BeginPlay()
 	Super::BeginPlay();
 
 	m_SteeringBehaviors = MakeShared<FSteeringBehaviors>(this);
+		
 }
 
 void AVehicle::Update(float DeltaSeconds)

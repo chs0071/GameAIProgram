@@ -1,19 +1,26 @@
 ﻿#include "SteeringBehaviors.h"
 
-#include "Define/Vector2d.h"
+#include "Calculator/Calculator.h"
 #include "Vehicle/Vehicle.h"
 
 
 FSteeringBehaviors::FSteeringBehaviors(const TWeakObjectPtr<AVehicle>& InSteeringTarget)
-	: m_SteeringTarget(InSteeringTarget)
+	: m_SteeringTarget(InSteeringTarget),
+	m_SummingMethodType(InSteeringTarget->SummingMethod),
+	m_BehaviorCalculateFlag(InSteeringTarget->BehaviorType)
 {
-	
 }
 
 FVector2d FSteeringBehaviors::Calculate()
 {
-	FVector2d Result;
-	return Result;
+	m_SteeringForce = Calculator::Calculate(AsShared());
+
+	return m_SteeringForce;
+}
+
+ESummingMethod FSteeringBehaviors::GetSummingMethodType() const
+{
+	return m_SummingMethodType;
 }
 
 double FSteeringBehaviors::GetForwardRad() const
@@ -24,6 +31,16 @@ double FSteeringBehaviors::GetForwardRad() const
 double FSteeringBehaviors::GetSideRad() const
 {
 	return m_SteeringTarget->GetSideDirection().Dot(m_SteeringForce);
+}
+
+TWeakObjectPtr<AVehicle> FSteeringBehaviors::GetSteeringTarget()
+{
+	return m_SteeringTarget;
+}
+
+FVector2d FSteeringBehaviors::GetTargetPos()
+{
+	return m_TargetPos;
 }
 
 void FSteeringBehaviors::SetPath()
@@ -43,4 +60,14 @@ void FSteeringBehaviors::SetTargetAgentFirst(const TWeakObjectPtr<AVehicle>& InA
 void FSteeringBehaviors::SetTargetAgentSecond(const TWeakObjectPtr<AVehicle>& InAgent)
 {
 	m_AgentSecond = InAgent;
+}
+
+void FSteeringBehaviors::ResetSteeringForce()
+{
+	m_SteeringForce = FVector2d::Zero();
+}
+
+bool FSteeringBehaviors::OnBehaviorCalculateFlag(int32 InBehaviorType)
+{
+	return (m_BehaviorCalculateFlag & InBehaviorType) == InBehaviorType;
 }
