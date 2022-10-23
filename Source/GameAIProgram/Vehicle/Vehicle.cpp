@@ -14,9 +14,11 @@ void AVehicle::BeginPlay()
 void AVehicle::Update(float DeltaSeconds)
 {
 	Super::Update(DeltaSeconds);
+	
 	FVector2d LocalSteeringForce = m_SteeringBehaviors->Calculate();
 	FVector2d LocalAcceleration = LocalSteeringForce / Mass;
 	GameAI::FVector2d LocalCalVelocity = LocalAcceleration * DeltaSeconds;
+	
 	m_Velocity += LocalCalVelocity;
 	m_Velocity.Truncate(MaxSpeed);
 	AddPos(m_Velocity * DeltaSeconds);

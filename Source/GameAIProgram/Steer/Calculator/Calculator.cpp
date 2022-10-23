@@ -36,11 +36,13 @@ FVector2d Calculator::Calculate(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
 FVector2d Calculator::CalculateWeightedSum(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
 {
 	FVector2d Result;
+	
 	const auto& OnFlagCalculateBehaviorType = GetOnFlagCalculateBehaviorType(InCalculateTarget);
 	for (const auto& Element : OnFlagCalculateBehaviorType)
 	{
 		Result += Element.Pin()->Execute(InCalculateTarget);
 	}
+	
 	return Result;
 }
 
@@ -79,13 +81,15 @@ TArray<TWeakPtr<ISteeringBehaviorsCalculator>> Calculator::GetOnFlagCalculateBeh
 		static_cast<int32>(EBehaviorType::OffsetPursuit),
 		};
 
-	for (const int32 Element : IteratorArray)
+	for (const int32& Element : IteratorArray)
 	{
 		if (InCalculateTarget.Pin()->OnBehaviorCalculateFlag(Element))
 		{
 			auto BehaviorsCalculatorPtr = sBehaviorsCalculatorContainer.Find(Element);
+
 			if (BehaviorsCalculatorPtr == nullptr)
 				continue;
+			
 			Result.Add(*BehaviorsCalculatorPtr);
 		}
 	}
