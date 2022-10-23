@@ -1,5 +1,6 @@
 ﻿#include "Vehicle.h"
 
+#include "Define/WorldDefine.h"
 #include "Steer/SteeringBehaviors.h"
 
 void AVehicle::BeginPlay()
@@ -25,4 +26,8 @@ void AVehicle::Update(float DeltaSeconds)
 		m_HeadingDirection.Normalize();
 		m_SideDirection = m_HeadingDirection.Perp();
 	}
+
+	GameAI::FVector2d LocalCurPos = GetPos2d();
+	GameAI::FVector2d::WrapAround(LocalCurPos, AI_World::MAX_SIZE.X, AI_World::MAX_SIZE.Y);
+	SetPos(LocalCurPos);
 }

@@ -51,4 +51,17 @@ namespace GameAI
 		Result.Y = X;
 		return Result;
 	}
+
+	void FVector2d::WrapAround(GameAI::FVector2d& InTargetPos, double InMaxX, double InMaxY)
+	{
+		if (InTargetPos.X > InMaxX)
+			InTargetPos.X = 0;
+		if (InTargetPos.X < 0)
+			InTargetPos.X = InMaxX;
+		
+		if (InTargetPos.Y > InMaxY)
+			InTargetPos.Y = 0;
+		if (InTargetPos.Y < 0)
+			InTargetPos.Y = InMaxY;
+	}
 }
