@@ -11,7 +11,7 @@ FSteeringBehaviors::FSteeringBehaviors(const TWeakObjectPtr<AVehicle>& InSteerin
 {
 }
 
-FVector2d FSteeringBehaviors::Calculate()
+GameAI::FVector2d FSteeringBehaviors::Calculate()
 {
 	m_SteeringForce = Calculator::Calculate(AsShared());
 
@@ -47,7 +47,7 @@ void FSteeringBehaviors::SetPath()
 {
 }
 
-void FSteeringBehaviors::SetTargetPos(const FVector2d& InTargetPos)
+void FSteeringBehaviors::SetTargetPos(const GameAI::FVector2d& InTargetPos)
 {
 	m_TargetPos = InTargetPos;
 }

@@ -7,8 +7,7 @@ void AVehicle::BeginPlay()
 {
 	Super::BeginPlay();
 
-	m_SteeringBehaviors = MakeShared<FSteeringBehaviors>(this);
-		
+	m_SteeringBehaviors = MakeShareable<FSteeringBehaviors>(new FSteeringBehaviors(this));
 }
 
 void AVehicle::Update(float DeltaSeconds)
@@ -31,4 +30,9 @@ void AVehicle::Update(float DeltaSeconds)
 	GameAI::FVector2d LocalCurPos = GetPos2d();
 	GameAI::FVector2d::WrapAround(LocalCurPos, AI_World::MAX_SIZE.X, AI_World::MAX_SIZE.Y);
 	SetPos(LocalCurPos);
+}
+
+TWeakPtr<FSteeringBehaviors> AVehicle::GetSteeringBehaviors()
+{
+	return m_SteeringBehaviors;
 }

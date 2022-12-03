@@ -14,6 +14,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Update(float DeltaSeconds) override;
 
+	TWeakPtr<FSteeringBehaviors> GetSteeringBehaviors();
 public:
 	UPROPERTY(EditAnywhere, Meta = (Bitmask, BitmaskEnum = "EBehaviorType"))
 	int32 BehaviorType;

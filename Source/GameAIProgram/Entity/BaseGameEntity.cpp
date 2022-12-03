@@ -2,6 +2,12 @@
 
 #include "Define/Vector2d.h"
 
+ABaseGameEntity::ABaseGameEntity()
+{
+	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bStartWithTickEnabled = true;
+}
+
 void ABaseGameEntity::BeginPlay()
 {
 	Super::BeginPlay();
@@ -10,6 +16,7 @@ void ABaseGameEntity::BeginPlay()
 void ABaseGameEntity::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	Update(DeltaSeconds);
 }
 
 void ABaseGameEntity::Update(float DeltaSeconds)

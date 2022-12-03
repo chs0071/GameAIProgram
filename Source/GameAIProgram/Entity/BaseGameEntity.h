@@ -6,6 +6,7 @@ class ABaseGameEntity : public AActor
 {
 	GENERATED_BODY()
 public:
+	ABaseGameEntity();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void Update(float DeltaSeconds);
