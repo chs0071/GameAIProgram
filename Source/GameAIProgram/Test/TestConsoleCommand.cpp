@@ -1,5 +1,4 @@
-﻿#pragma once
-#include "Misc/AutomationTest.h"
+﻿#include "TestConsoleCommand.h"
 #include "EngineUtils.h"
 #include "TargetActor.h"
 #include "Editor/EditorEngine.h"
@@ -27,10 +26,7 @@ inline TArray<AVehicle*> GetVehicles()
 	return Result;
 }
 
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FAIAgentSetTargetTest, "AI.Agent.SetTarget",
-                                 EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::RequiresUser| EAutomationTestFlags::EngineFilter)
-
-bool FAIAgentSetTargetTest::RunTest(const FString& Parameters)
+bool TestConsoleCommand::SetTarget()
 {
 	ATargetActor* LocalTargetActor = GetTargetActor();
 	TArray<AVehicle*> LocalVehicles = GetVehicles();

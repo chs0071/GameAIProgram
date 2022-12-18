@@ -16,6 +16,11 @@ namespace GameAI
 		*this = InValue; 
 	}
 
+	FVector2d::FVector2d(const FRotator& InValue)
+	{
+		*this = InValue.Vector();
+	}
+
 	FVector2d& FVector2d::operator=(const UE::Math::TVector<double>& InValue)
 	{
 		X = InValue.X;
@@ -33,6 +38,12 @@ namespace GameAI
 	FVector2d::operator UE::Math::TVector<double>() const
 	{
 		return FVector(X, Y, 0.0f);
+	}
+
+	FVector2d::operator UE::Math::TRotator<double>() const
+	{
+		const FVector& ThisVector = *this;
+		return ThisVector.Rotation();
 	}
 
 	void FVector2d::Truncate(double InMax)
@@ -55,13 +66,13 @@ namespace GameAI
 	void FVector2d::WrapAround(GameAI::FVector2d& InTargetPos, double InMaxX, double InMaxY)
 	{
 		if (InTargetPos.X > InMaxX)
-			InTargetPos.X = 0;
-		if (InTargetPos.X < 0)
+			InTargetPos.X = -InMaxX;
+		if (InTargetPos.X < -InMaxX)
 			InTargetPos.X = InMaxX;
 		
 		if (InTargetPos.Y > InMaxY)
-			InTargetPos.Y = 0;
-		if (InTargetPos.Y < 0)
+			InTargetPos.Y = -InMaxY;
+		if (InTargetPos.Y < -InMaxY)
 			InTargetPos.Y = InMaxY;
 	}
 }

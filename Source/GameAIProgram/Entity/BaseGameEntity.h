@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "Define/Vector2d.h"
 #include "BaseGameEntity.generated.h"
 
 UCLASS()
@@ -20,6 +21,8 @@ public:
 	float GetBoundingRadius() const;
 
 	void AddPos(const FVector2d& InPos);
+	GameAI::FVector2d GetRotation();
+	void SetRotation(const GameAI::FVector2d& InUpdateRotation);
 
 private:
 	int32 m_ID;

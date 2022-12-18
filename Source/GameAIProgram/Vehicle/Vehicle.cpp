@@ -27,6 +27,7 @@ void AVehicle::Update(float DeltaSeconds)
 		m_HeadingDirection = m_Velocity;
 		m_HeadingDirection.Normalize();
 		m_SideDirection = m_HeadingDirection.Perp();
+		SetRotation(m_HeadingDirection);
 	}
 
 	GameAI::FVector2d LocalCurPos = GetPos2d();

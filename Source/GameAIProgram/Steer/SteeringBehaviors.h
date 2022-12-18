@@ -33,6 +33,4 @@ private:
 	TWeakObjectPtr<AVehicle> m_AgentSecond;
 
 	GameAI::FVector2d m_SteeringForce;
-	ESummingMethod m_SummingMethodType;
-	int32 m_BehaviorCalculateFlag;
 };

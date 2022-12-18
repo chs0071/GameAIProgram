@@ -5,9 +5,7 @@
 
 
 FSteeringBehaviors::FSteeringBehaviors(const TWeakObjectPtr<AVehicle>& InSteeringTarget)
-	: m_SteeringTarget(InSteeringTarget),
-	m_SummingMethodType(InSteeringTarget->SummingMethod),
-	m_BehaviorCalculateFlag(InSteeringTarget->BehaviorType)
+	: m_SteeringTarget(InSteeringTarget)
 {
 }
 
@@ -20,7 +18,7 @@ GameAI::FVector2d FSteeringBehaviors::Calculate()
 
 ESummingMethod FSteeringBehaviors::GetSummingMethodType() const
 {
-	return m_SummingMethodType;
+	return m_SteeringTarget->SummingMethod;
 }
 
 double FSteeringBehaviors::GetForwardRad() const
@@ -69,5 +67,5 @@ void FSteeringBehaviors::ResetSteeringForce()
 
 bool FSteeringBehaviors::OnBehaviorCalculateFlag(int32 InBehaviorType)
 {
-	return (m_BehaviorCalculateFlag & InBehaviorType) == InBehaviorType;
+	return (m_SteeringTarget->BehaviorType & InBehaviorType) == InBehaviorType;
 }

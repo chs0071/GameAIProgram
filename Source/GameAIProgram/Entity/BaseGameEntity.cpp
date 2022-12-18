@@ -30,8 +30,7 @@ int32 ABaseGameEntity::GetID() const
 
 FVector ABaseGameEntity::GetPos() const
 {
-	const FTransform& LocalTr = GetTransform();
-	return LocalTr.GetLocation();
+	return GetActorLocation();
 }
 
 FVector2d ABaseGameEntity::GetPos2d() const
@@ -61,4 +60,17 @@ void ABaseGameEntity::AddPos(const FVector2d& InPos)
 	AddLocation.X = InPos.X;
 	AddLocation.Y = InPos.Y;
 	SetPos(GetPos() + AddLocation);
+}
+
+GameAI::FVector2d ABaseGameEntity::GetRotation()
+{
+	return GetActorRotation();
+}
+
+void ABaseGameEntity::SetRotation(const GameAI::FVector2d & InUpdateRotation)
+{
+	GameAI::FVector2d LocalCurRotation = GetActorRotation();
+	GameAI::FVector2d LocalDeltaRotation = InUpdateRotation - LocalCurRotation;
+	LocalCurRotation += LocalDeltaRotation;
+	SetActorRotation(LocalCurRotation);
 }
