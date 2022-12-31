@@ -1,5 +1,6 @@
 ﻿#include "Vehicle.h"
 
+#include "Define/DebugIndexDefine.h"
 #include "Define/WorldDefine.h"
 #include "Steer/SteeringBehaviors.h"
 
@@ -20,6 +21,8 @@ void AVehicle::Update(float DeltaSeconds)
 	
 	m_Velocity += LocalCalVelocity;
 	m_Velocity.Truncate(MaxSpeed);
+	PrintVelocityDebugMessage();
+	PrintToTargetDistance();
 	AddPos(m_Velocity * DeltaSeconds);
 
 	if (m_Velocity.SquaredLength() > 0.00000001)
@@ -38,4 +41,18 @@ void AVehicle::Update(float DeltaSeconds)
 TWeakPtr<FSteeringBehaviors> AVehicle::GetSteeringBehaviors()
 {
 	return m_SteeringBehaviors;
+}
+
+void AVehicle::PrintVelocityDebugMessage()
+{
+	const FString& Message = FString::Printf(TEXT("Velocity : (%f,%f)"), m_Velocity.X, m_Velocity.Y);
+	GEngine->AddOnScreenDebugMessage(FDebugIndex::VehicleVelocity, FDebugIndex::OnDisplayTime, FColor::Green, Message);
+}
+
+void AVehicle::PrintToTargetDistance()
+{
+	const FVector2d& ToTarget = m_SteeringBehaviors->GetTargetPos() - GetPos2d();
+	const double& Distance = ToTarget.Length();
+	const FString& Message = FString::Printf(TEXT("Distance : (%f)"), Distance);
+	GEngine->AddOnScreenDebugMessage(FDebugIndex::VehicleToTargetDistance, FDebugIndex::OnDisplayTime, FColor::Green, Message);
 }

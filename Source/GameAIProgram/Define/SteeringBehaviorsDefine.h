@@ -26,3 +26,11 @@ ENUM_CLASS_FLAGS(EBehaviorType)
 
 UENUM()
 enum class ESummingMethod{Weighted_Average, Prioritized, Dithered};
+
+UENUM()
+enum class EDeceleration
+{
+	fast = 1,
+	normal = 2,
+	slow = 3,
+};

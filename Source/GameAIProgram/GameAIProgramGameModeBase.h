@@ -16,4 +16,5 @@ class GAMEAIPROGRAM_API AGameAIProgramGameModeBase : public AGameModeBase
 
 	static void SetTarget();
 	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
+	virtual void StartPlay() override;
 };

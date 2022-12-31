@@ -49,3 +49,10 @@ void AGameAIProgramGameModeBase::InitGame(const FString& MapName, const FString&
 		FConsoleCommandDelegate::CreateStatic(&AGameAIProgramGameModeBase::SetTarget), ECVF_Default);
 }
 
+void AGameAIProgramGameModeBase::StartPlay()
+{
+	Super::StartPlay();
+
+	SetTarget();
+}
+
