@@ -18,6 +18,7 @@ public:
 private:
 	void PrintVelocityDebugMessage();
 	void PrintToTargetDistance();
+	
 public:
 	UPROPERTY(EditAnywhere, Meta = (Bitmask, BitmaskEnum = "EBehaviorType"))
 	int32 BehaviorType;
@@ -30,6 +31,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	double DecelerationTweaker = 0.3;
+
+	UPROPERTY(EditAnywhere)
+	FName FollowTarget;
 	
 private:
 	TSharedPtr<FSteeringBehaviors> m_SteeringBehaviors;

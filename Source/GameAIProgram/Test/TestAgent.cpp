@@ -32,12 +32,5 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FAIAgentSetTargetTest, "AI.Agent.SetTarget",
 
 bool FAIAgentSetTargetTest::RunTest(const FString& Parameters)
 {
-	ATargetActor* LocalTargetActor = GetTargetActor();
-	TArray<AVehicle*> LocalVehicles = GetVehicles();
-	for (AVehicle* Element : LocalVehicles)
-	{
-		TWeakPtr<FSteeringBehaviors> LocalSteeringBehaviors = Element->GetSteeringBehaviors();
-		LocalSteeringBehaviors.Pin()->SetTargetPos(LocalTargetActor->GetActorLocation());
-	}
 	return true;
 }

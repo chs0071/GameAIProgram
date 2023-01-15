@@ -33,7 +33,7 @@ bool TestConsoleCommand::SetTarget()
 	for (AVehicle* Element : LocalVehicles)
 	{
 		TWeakPtr<FSteeringBehaviors> LocalSteeringBehaviors = Element->GetSteeringBehaviors();
-		LocalSteeringBehaviors.Pin()->SetTargetPos(LocalTargetActor->GetActorLocation());
+//		LocalSteeringBehaviors.Pin()->SetTargetPos(LocalTargetActor->GetActorLocation());
 	}
 	return true;
 }

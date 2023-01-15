@@ -1,28 +1,27 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
-
 #include "GameAIProgramGameModeBase.h"
 #include "EngineUtils.h"
-#include "TargetActor.h"
 #include "Editor/EditorEngine.h"
 #include "Steer/SteeringBehaviors.h"
 #include "Vehicle/Vehicle.h"
 
-inline ATargetActor* GetTargetActor()
+UWorld* GetWorld()
 {
-	for (TActorIterator<ATargetActor> ActorItr(GWorld); ActorItr; ++ActorItr)
-	{
-		return *ActorItr;
-	}
-	return nullptr;
+	const FWorldContext* LocalCurrentWorld = Cast<UEditorEngine>(GEngine)->GetPIEWorldContext();
+	if(nullptr == LocalCurrentWorld)
+		return nullptr;
+	
+	return LocalCurrentWorld->World();
 }
-
 
 inline TArray<AVehicle*> GetVehicles()
 {
 	TArray<AVehicle*> Result;
-	FWorldContext* LocalCurrentWorld = Cast<UEditorEngine>(GEngine)->GetPIEWorldContext();
-	for (TActorIterator<AVehicle> ActorItr(LocalCurrentWorld->World()); ActorItr; ++ActorItr)
+
+	const UWorld* LocalWorld = GetWorld();
+	if(false == IsValid(LocalWorld))
+		return Result;
+	
+	for (TActorIterator<AVehicle> ActorItr(LocalWorld); ActorItr; ++ActorItr)
 	{
 		Result.Add(*ActorItr);
 	}
@@ -31,15 +30,37 @@ inline TArray<AVehicle*> GetVehicles()
 
 void AGameAIProgramGameModeBase::SetTarget()
 {
-	ATargetActor* LocalTargetActor = GetTargetActor();
+	TMap<FName, AVehicle*> LocalFindVehicle;
 	TArray<AVehicle*> LocalVehicles = GetVehicles();
+
 	for (AVehicle* Element : LocalVehicles)
 	{
+		if(Element->Tags.IsEmpty())
+			continue;
+		
+		LocalFindVehicle.Add(Element->Tags[0], Element);
+	}
+	
+	for (AVehicle* Element : LocalVehicles)
+	{
+		if(false == IsValid(Element))
+			continue;
+
+		if(Element->FollowTarget.IsNone())
+			continue;
+
+		AVehicle** LocalFindTarget = LocalFindVehicle.Find(Element->FollowTarget);
+		if(nullptr == LocalFindTarget)
+			continue;
+
+		const AVehicle* LocalTargetVehicle = (*LocalFindTarget);
+		if(false == IsValid(LocalTargetVehicle))
+			continue;
+		
 		TWeakPtr<FSteeringBehaviors> LocalSteeringBehaviors = Element->GetSteeringBehaviors();
-		LocalSteeringBehaviors.Pin()->SetTargetPos(LocalTargetActor->GetActorLocation());
+		LocalSteeringBehaviors.Pin()->SetTarget(LocalTargetVehicle);
 	}
 }
-
 
 void AGameAIProgramGameModeBase::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
 {

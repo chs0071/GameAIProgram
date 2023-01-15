@@ -6,6 +6,7 @@
 
 FSteeringBehaviors::FSteeringBehaviors(const TWeakObjectPtr<AVehicle>& InSteeringTarget)
 	: m_SteeringTarget(InSteeringTarget)
+	, m_TargetVehicle(nullptr)
 {
 }
 
@@ -38,16 +39,21 @@ TWeakObjectPtr<AVehicle> FSteeringBehaviors::GetSteeringTarget()
 
 FVector2d FSteeringBehaviors::GetTargetPos()
 {
-	return m_TargetPos;
+	GameAI::FVector2d ReturnValue;
+	
+	if(IsValid(m_TargetVehicle))
+		ReturnValue = m_TargetVehicle->GetActorLocation(); 
+
+	return ReturnValue;
 }
 
 void FSteeringBehaviors::SetPath()
 {
 }
 
-void FSteeringBehaviors::SetTargetPos(const GameAI::FVector2d& InTargetPos)
+void FSteeringBehaviors::SetTarget(const AVehicle* InTarget)
 {
-	m_TargetPos = InTargetPos;
+	m_TargetVehicle = InTarget;
 }
 
 void FSteeringBehaviors::SetTargetAgentFirst(const TWeakObjectPtr<AVehicle>& InAgent)

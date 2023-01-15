@@ -18,7 +18,7 @@ public:
 	TWeakObjectPtr<AVehicle> GetSteeringTarget();
 	FVector2d GetTargetPos();
 	void SetPath();
-	void SetTargetPos(const GameAI::FVector2d& InTargetPos);
+	void SetTarget(const AVehicle* InTarget);
 	void SetTargetAgentFirst(const TWeakObjectPtr<AVehicle>& InAgent);
 	void SetTargetAgentSecond(const TWeakObjectPtr<AVehicle>& InAgent);
 	void ResetSteeringForce();
@@ -28,7 +28,7 @@ public:
 
 private:
 	TWeakObjectPtr<AVehicle> m_SteeringTarget;
-	GameAI::FVector2d m_TargetPos;
+	const AVehicle* m_TargetVehicle;
 	TWeakObjectPtr<AVehicle> m_AgentFirst;
 	TWeakObjectPtr<AVehicle> m_AgentSecond;
 
