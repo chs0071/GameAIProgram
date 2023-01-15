@@ -44,3 +44,13 @@ float AMovingEntity::GetMaxTurnRate() const
 {
 	return MaxTurnRate;
 }
+
+double AMovingEntity::GetSpeed() const
+{
+	return GetVelocity2d().Length();
+}
+
+double AMovingEntity::GetSpeedSq() const
+{
+	return GetVelocity2d().SizeSquared();
+}

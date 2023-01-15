@@ -6,12 +6,14 @@
 #include "ISteeringBehaviorsCalculator.h"
 #include "Seek.h"
 #include "Flee.h"
+#include "Pursuit.h"
 
 TMap<int32, TSharedPtr<ISteeringBehaviorsCalculator>> Calculator::sBehaviorsCalculatorContainer =
 	{
 		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Seek), MakeShareable(new Seek())),
 		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Flee), MakeShareable(new Flee())),
 		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Arrive), MakeShareable(new Arrive())),
+		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Pursuit), MakeShareable(new Pursuit())),
 	};
 
 FVector2d Calculator::Calculate(TWeakPtr<FSteeringBehaviors> InCalculateTarget)

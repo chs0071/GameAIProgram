@@ -31,3 +31,8 @@ void Arrive::PrintArriveDebugMessage(const double& InSpeed, const FVector2d& InD
 	const FString& MessageVelocity = FString::Printf(TEXT("ArriveVelocity : (%f,%f)"), InDesiredVelocity.X, InDesiredVelocity.Y);
 	GEngine->AddOnScreenDebugMessage(FDebugIndex::ArriveDesiredVelocity, FDebugIndex::OnDisplayTime, FColor::Green, MessageVelocity);
 }
+
+FVector2d Arrive::Execute(TWeakPtr<FSteeringBehaviors> InOwner, const GameAI::FVector2d& InTargetPos)
+{
+	return FVector2d::Zero();
+}

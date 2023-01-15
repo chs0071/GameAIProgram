@@ -17,6 +17,7 @@ public:
 
 	TWeakObjectPtr<AVehicle> GetSteeringTarget();
 	FVector2d GetTargetPos();
+	const AVehicle* GetTargetVehicle();
 	void SetPath();
 	void SetTarget(const AVehicle* InTarget);
 	void SetTargetAgentFirst(const TWeakObjectPtr<AVehicle>& InAgent);

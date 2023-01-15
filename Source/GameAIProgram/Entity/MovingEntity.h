@@ -18,6 +18,8 @@ public:
 	float GetMaxSpeed() const;
 	float GetMaxForce() const;
 	float GetMaxTurnRate() const;
+	double GetSpeed() const;
+	double GetSpeedSq() const;
 	
 public:
 	UPROPERTY(EditAnywhere)

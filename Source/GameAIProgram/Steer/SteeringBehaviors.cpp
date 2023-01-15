@@ -47,6 +47,11 @@ FVector2d FSteeringBehaviors::GetTargetPos()
 	return ReturnValue;
 }
 
+const AVehicle* FSteeringBehaviors::GetTargetVehicle()
+{
+	return m_TargetVehicle;
+}
+
 void FSteeringBehaviors::SetPath()
 {
 }

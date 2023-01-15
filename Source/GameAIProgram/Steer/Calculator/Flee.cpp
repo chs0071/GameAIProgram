@@ -21,3 +21,8 @@ FVector2d Flee::Execute(TWeakPtr<FSteeringBehaviors> InOwner)
 
 	return DesiredVelocity - Vehicle->GetVelocity2d();
 }
+
+FVector2d Flee::Execute(TWeakPtr<FSteeringBehaviors> InOwner, const GameAI::FVector2d& InTargetPos)
+{
+	return {};
+}
