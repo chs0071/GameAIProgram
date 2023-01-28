@@ -4,6 +4,7 @@
 #include "Vehicle.generated.h"
 
 class FSteeringBehaviors;
+class USteeringParameterBase;
 
 UCLASS()
 class AVehicle : public AMovingEntity
@@ -22,6 +23,9 @@ private:
 public:
 	UPROPERTY(EditAnywhere, Meta = (Bitmask, BitmaskEnum = "EBehaviorType"))
 	int32 BehaviorType;
+
+	UPROPERTY(EditAnywhere)
+	TMap<EBehaviorType, TObjectPtr<USteeringParameterBase>> SteeringParams;
 
 	UPROPERTY(EditAnywhere)
 	ESummingMethod SummingMethod;
