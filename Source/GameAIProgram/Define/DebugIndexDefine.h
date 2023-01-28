@@ -12,4 +12,5 @@ public:
 	inline static uint64 PursuitRelativeHeading = 6;
 	inline static uint64 PursuitOwnerHeadingDirection = 7;
 	inline static uint64 PursuitEvaderHeadingDirection = 8;
+	inline static uint64 EvadeResult = 9;
 };

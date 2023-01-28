@@ -1,6 +1,7 @@
 ﻿#include "Calculator.h"
 
 #include "Arrive.h"
+#include "Evade.h"
 #include "Define/Vector2d.h"
 #include "Steer/SteeringBehaviors.h"
 #include "ISteeringBehaviorsCalculator.h"
@@ -14,6 +15,7 @@ TMap<int32, TSharedPtr<ISteeringBehaviorsCalculator>> Calculator::sBehaviorsCalc
 		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Flee), MakeShareable(new Flee())),
 		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Arrive), MakeShareable(new Arrive())),
 		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Pursuit), MakeShareable(new Pursuit())),
+		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Evade), MakeShareable(new Evade())),
 	};
 
 FVector2d Calculator::Calculate(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
