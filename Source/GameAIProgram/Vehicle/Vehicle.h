@@ -16,6 +16,15 @@ public:
 	virtual void Update(float DeltaSeconds) override;
 
 	TWeakPtr<FSteeringBehaviors> GetSteeringBehaviors();
+	
+	USteeringParameterBase* GetSteeringParamter(const EBehaviorType& InType) const;
+
+	template<typename ReturnType>
+	ReturnType* TGetSteeringParameter(const EBehaviorType& InType) const
+	{
+		return Cast<ReturnType>(GetSteeringParamter(InType));
+	}
+	
 private:
 	void PrintVelocityDebugMessage();
 	void PrintToTargetDistance();
