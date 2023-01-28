@@ -38,7 +38,7 @@ FVector2d Pursuit::Execute(TWeakPtr<FSteeringBehaviors> InOwner)
 	const FVector2d& LocalEvaderDeltaPosition = LocalEvader->GetVelocity2d() * LocalLookAheadTime;
 	const FVector2d& LocalEvaderPredicatedPosition = LocalEvaderPos + LocalEvaderDeltaPosition;
 
-	AI_LOG(FDebugIndex::PursuitOwnerHeadingDirection, TEXT("Call Predicated Seek"))
+	AI_LOG(FDebugIndex::PursuitResult, TEXT("Call Predicated Seek"))
 	return LocalSeek.Execute(InOwner, LocalEvaderPredicatedPosition);
 }
 
