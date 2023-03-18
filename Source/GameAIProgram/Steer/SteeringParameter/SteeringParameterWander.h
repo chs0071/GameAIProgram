@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include "SteeringParameterBase.h"
 
-#include "SteeringParamterWander.generated.h"
+#include "SteeringParameterWander.generated.h"
 
 UCLASS(editinlinenew)
-class USteeringParamterWander : public USteeringParameterBase
+class USteeringParameterWander : public USteeringParameterBase
 {
 	GENERATED_BODY()
 

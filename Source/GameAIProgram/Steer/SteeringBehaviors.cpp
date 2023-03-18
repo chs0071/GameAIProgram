@@ -2,7 +2,18 @@
 
 #include "Calculator/Calculator.h"
 #include "Vehicle/Vehicle.h"
+#include "Steer/SteeringParameter/SteeringParameterWander.h"
 
+#define GET_STEERING_PARAM(BehaviorTypeName) \
+USteeringParameter##BehaviorTypeName##* FSteeringBehaviors::GetSteeringParam##BehaviorTypeName##() const\
+{\
+	if (GetSteeringTarget().IsValid() == false)\
+		return nullptr;\
+	return GetSteeringTarget()->GetSteeringParam<USteeringParameter##BehaviorTypeName##>(EBehaviorType::##BehaviorTypeName##);\
+}
+
+#include "SteeringParamList.inl"
+#undef GET_STEERING_PARAM
 
 FSteeringBehaviors::FSteeringBehaviors(const TWeakObjectPtr<AVehicle>& InSteeringTarget)
 	: m_SteeringTarget(InSteeringTarget)
@@ -32,7 +43,7 @@ double FSteeringBehaviors::GetSideRad() const
 	return m_SteeringTarget->GetSideDirection().Dot(m_SteeringForce);
 }
 
-TWeakObjectPtr<AVehicle> FSteeringBehaviors::GetSteeringTarget()
+TWeakObjectPtr<AVehicle> FSteeringBehaviors::GetSteeringTarget() const
 {
 	return m_SteeringTarget;
 }
@@ -79,4 +90,14 @@ void FSteeringBehaviors::ResetSteeringForce()
 bool FSteeringBehaviors::OnBehaviorCalculateFlag(int32 InBehaviorType)
 {
 	return (m_SteeringTarget->BehaviorType & InBehaviorType) == InBehaviorType;
+}
+
+FVector2d FSteeringBehaviors::GetTargetWander()
+{
+	return m_TargetWander;
+}
+
+void FSteeringBehaviors::SetTargetWander(const FVector2d& InTargetWander)
+{
+	m_TargetWander = InTargetWander;
 }

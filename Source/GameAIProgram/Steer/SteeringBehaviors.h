@@ -15,7 +15,7 @@ public:
 	double GetForwardRad() const;
 	double GetSideRad() const;
 
-	TWeakObjectPtr<AVehicle> GetSteeringTarget();
+	TWeakObjectPtr<AVehicle> GetSteeringTarget() const;
 	FVector2d GetTargetPos();
 	const AVehicle* GetTargetVehicle();
 	void SetPath();
@@ -26,7 +26,13 @@ public:
 
 	bool OnBehaviorCalculateFlag(int32 InBehaviorType);
 
+	FVector2d GetTargetWander();
+	void SetTargetWander(const FVector2d& InTargetWander);
 
+#define GET_STEERING_PARAM(BehaviorTypeName) class USteeringParameter##BehaviorTypeName##* FSteeringBehaviors::GetSteeringParam##BehaviorTypeName##() const;
+#include "SteeringParamList.inl"
+#undef GET_STEERING_PARAM
+	
 private:
 	TWeakObjectPtr<AVehicle> m_SteeringTarget;
 	const AVehicle* m_TargetVehicle;
@@ -34,4 +40,6 @@ private:
 	TWeakObjectPtr<AVehicle> m_AgentSecond;
 
 	GameAI::FVector2d m_SteeringForce;
+
+	FVector2d m_TargetWander;
 };
