@@ -43,7 +43,7 @@ TWeakPtr<FSteeringBehaviors> AVehicle::GetSteeringBehaviors()
 	return m_SteeringBehaviors;
 }
 
-USteeringParameterBase* AVehicle::GetSteeringParamter(const EBehaviorType& InType) const
+USteeringParameterBase* AVehicle::GetSteeringParameter(const EBehaviorType& InType) const
 {
 	const TObjectPtr<USteeringParameterBase>* LocalFindParameter = SteeringParams.Find(InType);
 	if(nullptr == LocalFindParameter)

@@ -17,12 +17,12 @@ public:
 
 	TWeakPtr<FSteeringBehaviors> GetSteeringBehaviors();
 	
-	USteeringParameterBase* GetSteeringParamter(const EBehaviorType& InType) const;
+	USteeringParameterBase* GetSteeringParameter(const EBehaviorType& InType) const;
 
 	template<typename ReturnType>
 	ReturnType* TGetSteeringParameter(const EBehaviorType& InType) const
 	{
-		return Cast<ReturnType>(GetSteeringParamter(InType));
+		return Cast<ReturnType>(GetSteeringParameter(InType));
 	}
 	
 private:

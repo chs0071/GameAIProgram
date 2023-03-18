@@ -9,7 +9,7 @@ USteeringParameter##BehaviorTypeName##* FSteeringBehaviors::GetSteeringParam##Be
 {\
 	if (GetSteeringTarget().IsValid() == false)\
 		return nullptr;\
-	return GetSteeringTarget()->GetSteeringParam<USteeringParameter##BehaviorTypeName##>(EBehaviorType::##BehaviorTypeName##);\
+	return GetSteeringTarget()->TGetSteeringParameter<USteeringParameter##BehaviorTypeName##>(EBehaviorType::##BehaviorTypeName##);\
 }
 
 #include "SteeringParamList.inl"
