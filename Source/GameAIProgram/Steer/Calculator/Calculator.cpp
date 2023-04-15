@@ -7,6 +7,7 @@
 #include "ISteeringBehaviorsCalculator.h"
 #include "Seek.h"
 #include "Flee.h"
+#include "ObstacleAvoidance.h"
 #include "Pursuit.h"
 #include "Wander.h"
 
@@ -18,7 +19,7 @@ TMap<int32, TSharedPtr<ISteeringBehaviorsCalculator>> Calculator::sBehaviorsCalc
 		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Pursuit), MakeShareable(new Pursuit())),
 		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Evade), MakeShareable(new Evade())),
 		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Wander), MakeShareable(new Wander())),
-	
+		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Obstacle_Avoidance), MakeShareable(new ObstacleAvoidance())),
 	};
 
 FVector2d Calculator::Calculate(TWeakPtr<FSteeringBehaviors> InCalculateTarget)

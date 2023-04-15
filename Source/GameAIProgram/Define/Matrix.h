@@ -17,6 +17,15 @@ namespace GameAI
 		static FVector2d PointToWorldSpace(const FVector2d& InPoint,
 		                                   const FVector2d& InObjectHeading,
 		                                   const FVector2d& InObjectSide,
-		                                   const FVector2d& InObjectPosition); 
+		                                   const FVector2d& InObjectPosition);
+
+		static FVector2D PointToLocalSpace(const FVector2d& InPoint,
+										   const FVector2d& InObjectHeading,
+										   const FVector2d& InObjectSide,
+										   const FVector2d& InObjectPosition);
+
+		static FVector2D VectorToWorldSpace(const FVector2d& InPoint,
+											const FVector2d& InObjectHeading,
+											const FVector2d& InObjectSide);
 	};
 }
