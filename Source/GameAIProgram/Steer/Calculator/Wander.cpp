@@ -25,6 +25,7 @@ FVector2d Wander::Execute(TWeakPtr<FSteeringBehaviors> InOwner)
 	FVector2d OwnerPos = OwnerVehicle->GetPos2d();
 	FVector2d TargetToWorldPos = GameAI::Matrix::PointToWorldSpace(TargetLocalPos, OwnerVehicle->GetHeadingDirection(),
 		OwnerVehicle->GetSideDirection(), OwnerPos);
+	
 	return TargetToWorldPos - OwnerPos;
 }
 

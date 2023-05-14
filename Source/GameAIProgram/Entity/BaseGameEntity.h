@@ -28,9 +28,8 @@ public:
 	void Tag() { m_IsTag = true; }
 	void UnTag() { m_IsTag = false; }
 
-private:
-	UPROPERTY()
-	Sp
+	UFUNCTION(BlueprintImplementableEvent)
+	float GetBoundingRadius();
 	
 private:
 	int32 m_ID;

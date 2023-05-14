@@ -1,5 +1,14 @@
 ﻿#include "MovingEntity.h"
 
+void AMovingEntity::BeginPlay()
+{
+	Super::BeginPlay();
+
+	m_HeadingDirection = GetActorRotation();
+	m_HeadingDirection.Normalize();
+	m_SideDirection = m_HeadingDirection.Perp();
+}
+
 void AMovingEntity::Update(float DeltaSeconds)
 {
 	Super::Update(DeltaSeconds);

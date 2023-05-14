@@ -47,11 +47,29 @@ FVector2d Calculator::Calculate(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
 FVector2d Calculator::CalculateWeightedSum(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
 {
 	FVector2d Result;
+
+	static TArray<int32> IteratorArray{
+		static_cast<int32>(EBehaviorType::Wall_Avoidance),
+		static_cast<int32>(EBehaviorType::Obstacle_Avoidance),
+		static_cast<int32>(EBehaviorType::Evade),
+		static_cast<int32>(EBehaviorType::Separation),
+		static_cast<int32>(EBehaviorType::Allignment),
+		static_cast<int32>(EBehaviorType::Cohesion),
+		static_cast<int32>(EBehaviorType::Wander),
+		static_cast<int32>(EBehaviorType::Seek),
+		static_cast<int32>(EBehaviorType::Flee),
+		static_cast<int32>(EBehaviorType::Arrive),
+		static_cast<int32>(EBehaviorType::Pursuit),
+		static_cast<int32>(EBehaviorType::OffsetPursuit),
+		static_cast<int32>(EBehaviorType::Interpose),
+		static_cast<int32>(EBehaviorType::Hide),
+		static_cast<int32>(EBehaviorType::FollowPath),
+		};
 	
-	const auto& OnFlagCalculateBehaviorType = GetOnFlagCalculateBehaviorType(InCalculateTarget);
+	const auto& OnFlagCalculateBehaviorType = GetOnFlagCalculateBehaviorType(InCalculateTarget, IteratorArray);
 	for (const auto& Element : OnFlagCalculateBehaviorType)
 	{
-		Result += Element.Pin()->Execute(InCalculateTarget);
+		Result += Element.Pin()->Execute(InCalculateTarget) * Element.Pin()->GetWeight();
 	}
 	
 	return Result;
@@ -59,20 +77,7 @@ FVector2d Calculator::CalculateWeightedSum(TWeakPtr<FSteeringBehaviors> InCalcul
 
 FVector2d Calculator::CalculatePrioritized(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
 {
-	FVector2d Result;
-	return Result;
-}
-
-FVector2d Calculator::CalculateDithered(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
-{
-	FVector2d Result;
-	return Result;
-}
-
-TArray<TWeakPtr<ISteeringBehaviorsCalculator>> Calculator::GetOnFlagCalculateBehaviorType(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
-{
-	TArray<TWeakPtr<ISteeringBehaviorsCalculator>> Result;
-	
+	// todo... 나중에 사용할 때 이넘문 순서를 정리해야한다.
 	static TArray<int32> IteratorArray{
 		static_cast<int32>(EBehaviorType::Seek),
 		static_cast<int32>(EBehaviorType::Flee),
@@ -91,8 +96,42 @@ TArray<TWeakPtr<ISteeringBehaviorsCalculator>> Calculator::GetOnFlagCalculateBeh
 		static_cast<int32>(EBehaviorType::Flock),
 		static_cast<int32>(EBehaviorType::OffsetPursuit),
 		};
+	
+	FVector2d Result;
+	return Result;
+}
 
-	for (const int32& Element : IteratorArray)
+FVector2d Calculator::CalculateDithered(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
+{
+	// todo... 나중에 사용할 때 이넘문 순서를 정리해야한다.
+	static TArray<int32> IteratorArray{
+		static_cast<int32>(EBehaviorType::Seek),
+		static_cast<int32>(EBehaviorType::Flee),
+		static_cast<int32>(EBehaviorType::Arrive),
+		static_cast<int32>(EBehaviorType::Wander),
+		static_cast<int32>(EBehaviorType::Cohesion),
+		static_cast<int32>(EBehaviorType::Separation),
+		static_cast<int32>(EBehaviorType::Allignment),
+		static_cast<int32>(EBehaviorType::Obstacle_Avoidance),
+		static_cast<int32>(EBehaviorType::Wall_Avoidance),
+		static_cast<int32>(EBehaviorType::FollowPath),
+		static_cast<int32>(EBehaviorType::Pursuit),
+		static_cast<int32>(EBehaviorType::Evade),
+		static_cast<int32>(EBehaviorType::Interpose),
+		static_cast<int32>(EBehaviorType::Hide),
+		static_cast<int32>(EBehaviorType::Flock),
+		static_cast<int32>(EBehaviorType::OffsetPursuit),
+		};
+	
+	FVector2d Result;
+	return Result;
+}
+
+TArray<TWeakPtr<ISteeringBehaviorsCalculator>> Calculator::GetOnFlagCalculateBehaviorType(TWeakPtr<FSteeringBehaviors> InCalculateTarget, TArray<int32>& InIteratorArray)
+{
+	TArray<TWeakPtr<ISteeringBehaviorsCalculator>> Result;
+
+	for (const int32& Element : InIteratorArray)
 	{
 		if (InCalculateTarget.Pin()->OnBehaviorCalculateFlag(Element))
 		{

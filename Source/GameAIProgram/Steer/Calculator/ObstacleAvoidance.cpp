@@ -1,5 +1,6 @@
 ﻿#include "ObstacleAvoidance.h"
 
+#include "Define/GameAILog.h"
 #include "Define/Matrix.h"
 #include "Vehicle/Vehicle.h"
 #include "World/GameAILevelScript.h"
@@ -23,12 +24,27 @@ FVector2d ObstacleAvoidance::Execute(TWeakPtr<FSteeringBehaviors> InOwner)
 		return FVector2d::Zero();
 
 	const float LocalDetectionBoxLength = GetDetectionBoxLength(LocalVehicle);
+	AI_LOG(FDebugIndex::ObstaclesDetectionBoxLength, TEXT("DetectionBoxLength : %f"), LocalDetectionBoxLength);
 
 	TagObstaclesWithinViewRange(LocalVehicle, LocalObstacles, LocalDetectionBoxLength);
 
+	FString LocalTagedObject = TEXT("Taged Objects : ");
+	for(const auto Element : LocalObstacles)
+	{
+		if(Element->IsTaged())
+			LocalTagedObject.Append(Element->GetActorLabel() + TEXT(", "));
+	}
+	
+	AI_LOG(FDebugIndex::OnObstaclesTag, TEXT("%s"), *LocalTagedObject);
+	
 	ABaseGameEntity* LocalClosetIntersectionObstacle = GetClosetIntersectionObstacle(LocalVehicle, LocalObstacles);
 	if(false == IsValid(LocalClosetIntersectionObstacle))
+	{
+		AI_LOG(FDebugIndex::ClosetIntersectionObstacle, TEXT("ClosetIntersectionObstacle : Not"));
 		return FVector2d::Zero();
+	}
+
+	AI_LOG(FDebugIndex::ClosetIntersectionObstacle, TEXT("ClosetIntersectionObstacle : %s"), *LocalClosetIntersectionObstacle->GetActorLabel());
 
 	const FVector2D LocalSteeringForce = GetSteeringForce(LocalVehicle, LocalClosetIntersectionObstacle, LocalDetectionBoxLength);
 	const FVector2D ReturnValue = GameAI::Matrix::VectorToWorldSpace(LocalSteeringForce,
@@ -88,19 +104,25 @@ ABaseGameEntity* ObstacleAvoidance::GetClosetIntersectionObstacle(TWeakObjectPtr
 		if(false == Element->IsTaged())
 			continue;
 
-		FVector2D ElementToLocalPosition = GameAI::Matrix::PointToLocalSpace(Element->GetPos2d(),
-											 InVehicle->GetHeadingDirection(),
-											 InVehicle->GetSideDirection(),
-											 InVehicle->GetPos2d());
+		const FString LocalElementName = Element->GetActorLabel();
+
+		const FVector2D ElementToLocalPosition = GameAI::Matrix::PointToLocalSpace(Element->GetPos2d(),
+		                                                                           InVehicle->GetHeadingDirection(),
+		                                                                           InVehicle->GetSideDirection(),
+		                                                                           InVehicle->GetPos2d());
 
 		// X의 음수는 Vehicle의 뒤에있는 장애물이니 검사하지 않는다.
 		if(ElementToLocalPosition.X < 0)
 			continue;
 
-		const double LocalExpandedRadius = InVehicle->GetBoundingRadius() + Element->GetBoundingRadius();
-		const bool LocalIsOverExpandRadius = FMath::Abs(ElementToLocalPosition.Y) >= LocalExpandedRadius;
-		if(LocalIsOverExpandRadius)
+		const float& LocalVehicleRadius = InVehicle->GetBoundingRadius();
+		const float& LocalElementRadius = Element->GetBoundingRadius();
+		const double LocalExpandedRadius = LocalVehicleRadius + LocalElementRadius;
+		if(const bool LocalIsOverExpandRadius = FMath::Abs(ElementToLocalPosition.Y) >= LocalExpandedRadius)
+		{
 			continue;
+		}
+			
 
 		const FVector2D LocalCircleCenter = ElementToLocalPosition;
 		const double LocalDeltaAcrossPointByZeroX = FMath::Sqrt(LocalExpandedRadius * LocalExpandedRadius - LocalCircleCenter.Y * LocalCircleCenter.Y);

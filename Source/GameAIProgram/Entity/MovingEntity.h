@@ -9,6 +9,7 @@ class AMovingEntity : public ABaseGameEntity
 {
 	GENERATED_BODY()
 public:
+	virtual void BeginPlay() override;
 	virtual void Update(float DeltaSeconds) override;
 	FVector2d GetVelocity2d() const;
 	void SetVelocity(FVector2d InValue);
