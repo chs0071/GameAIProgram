@@ -16,5 +16,6 @@ public:
 	inline static uint64 OnObstaclesTag = 10;
 	inline static uint64 ObstaclesDetectionBoxLength = 11;
 	inline static uint64 ClosetIntersectionObstacle = 12;
+	inline static uint64 IsOverExpandRadius = 13;
 	
 };

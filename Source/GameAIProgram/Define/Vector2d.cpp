@@ -58,8 +58,8 @@ namespace GameAI
 	FVector2d FVector2d::Perp() const
 	{
 		FVector2d Result;
-		Result.X = -Y;
-		Result.Y = X;
+		Result.X = Y;
+		Result.Y = -X;
 		return Result;
 	}
 
@@ -74,5 +74,11 @@ namespace GameAI
 			InTargetPos.Y = -InMaxY;
 		if (InTargetPos.Y < -InMaxY)
 			InTargetPos.Y = InMaxY;
+	}
+
+	UE::Math::TQuat<double> FVector2d::ToQuat(const FVector2d& InVector2d)
+	{
+		const UE::Math::TRotator<double>& ThisRotator = InVector2d;
+		return FQuat::MakeFromRotator(ThisRotator);
 	}
 }

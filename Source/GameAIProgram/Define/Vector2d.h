@@ -20,5 +20,6 @@ namespace GameAI
 		FVector2d Perp() const;
 
 		static void WrapAround(GameAI::FVector2d& InTargetPos, double InMaxX, double InMaxY);
+		static FQuat ToQuat(const FVector2d& InVector2d);
 	};
 }

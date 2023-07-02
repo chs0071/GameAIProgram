@@ -18,7 +18,6 @@ public:
 	FVector2d GetPos2d() const;
 	void SetPos(const FVector& InPos);
 	float GetScale() const;
-	float GetBoundingRadius() const;
 
 	void AddPos(const FVector2d& InPos);
 	GameAI::FVector2d GetRotation();
@@ -29,10 +28,9 @@ public:
 	void UnTag() { m_IsTag = false; }
 
 	UFUNCTION(BlueprintImplementableEvent)
-	float GetBoundingRadius();
+	float GetBoundingRadius() const;
 	
 private:
 	int32 m_ID;
-	float m_BoundingRadius = 0.0f; // to do... 값 넣어야함
 	bool m_IsTag = false;
 };

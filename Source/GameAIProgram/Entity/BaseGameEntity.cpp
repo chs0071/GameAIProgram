@@ -49,11 +49,6 @@ float ABaseGameEntity::GetScale() const
 	return 1.0f;
 }
 
-float ABaseGameEntity::GetBoundingRadius() const
-{
-	return m_BoundingRadius;
-}
-
 void ABaseGameEntity::AddPos(const FVector2d& InPos)
 {
 	FVector AddLocation;

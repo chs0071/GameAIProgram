@@ -18,11 +18,17 @@ private:
 	ABaseGameEntity* GetClosetIntersectionObstacle(TWeakObjectPtr<AVehicle>& InVehicle,
 	                                               const TArray<ABaseGameEntity*>& InObstacles);
 
+	float GetBoundingRadius(TWeakObjectPtr<AVehicle>& InVehicle) const;
+	float GetDetectingBoxHalfY(TWeakObjectPtr<AVehicle>& InVehicle) const;
+
 	FVector2D GetSteeringForce(TWeakObjectPtr<AVehicle>& InVehicle, ABaseGameEntity* InClosetObstacle, const float InDetectionBoxLength);
+
+	void RenderViewRange(TWeakObjectPtr<AVehicle>& InVehicle);
 	
 	inline float GetMinDetectionBoxLength() const { return m_MinDetectionBoxLength; }  
-
+	
 private:
 	const float m_MinDetectionBoxLength = 100.0f;
-	float m_Weight = 10.0f;
+	float m_Weight = 1.0f;
+	float m_DetectingBoxHalfY = 60.0f;
 };
