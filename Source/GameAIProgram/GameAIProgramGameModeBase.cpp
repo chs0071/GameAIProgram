@@ -13,25 +13,28 @@ UWorld* GetWorld()
 	return LocalCurrentWorld->World();
 }
 
-inline TArray<AVehicle*> GetVehicles()
+namespace TestCallReflectionFunction
 {
-	TArray<AVehicle*> Result;
-
-	const UWorld* LocalWorld = GetWorld();
-	if(false == IsValid(LocalWorld))
-		return Result;
-	
-	for (TActorIterator<AVehicle> ActorItr(LocalWorld); ActorItr; ++ActorItr)
+	inline TArray<AVehicle*> GetVehicles()
 	{
-		Result.Add(*ActorItr);
-	}
-	return Result;
+		TArray<AVehicle*> Result;
+
+		const UWorld* LocalWorld = GetWorld();
+		if(false == IsValid(LocalWorld))
+			return Result;
+	
+		for (TActorIterator<AVehicle> ActorItr(LocalWorld); ActorItr; ++ActorItr)
+		{
+			Result.Add(*ActorItr);
+		}
+		return Result;
+	}	
 }
 
 void AGameAIProgramGameModeBase::SetTarget()
 {
 	TMap<FName, AVehicle*> LocalFindVehicle;
-	TArray<AVehicle*> LocalVehicles = GetVehicles();
+	TArray<AVehicle*> LocalVehicles = TestCallReflectionFunction::GetVehicles();
 
 	for (AVehicle* Element : LocalVehicles)
 	{

@@ -16,16 +16,18 @@ inline ATargetActor* GetTargetActor()
 	return nullptr;
 }
 
-
-inline TArray<AVehicle*> GetVehicles()
+namespace TestCallReflectionFunction
 {
-	TArray<AVehicle*> Result;
-	FWorldContext* LocalCurrentWorld = Cast<UEditorEngine>(GEngine)->GetPIEWorldContext();
-	for (TActorIterator<AVehicle> ActorItr(LocalCurrentWorld->World()); ActorItr; ++ActorItr)
+	inline TArray<AVehicle*> GetVehicles()
 	{
-		Result.Add(*ActorItr);
-	}
-	return Result;
+		TArray<AVehicle*> Result;
+		FWorldContext* LocalCurrentWorld = Cast<UEditorEngine>(GEngine)->GetPIEWorldContext();
+		for (TActorIterator<AVehicle> ActorItr(LocalCurrentWorld->World()); ActorItr; ++ActorItr)
+		{
+			Result.Add(*ActorItr);
+		}
+		return Result;
+	}	
 }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FAIAgentSetTargetTest, "AI.Agent.SetTarget",
@@ -43,7 +45,7 @@ bool FTestCallReflectionFunction::RunTest(const FString& Parameters)
 {
 	ObstacleAvoidance LocalOA;
 
-	TArray<AVehicle*> LocalVehicles = GetVehicles();
+	TArray<AVehicle*> LocalVehicles = TestCallReflectionFunction::GetVehicles();
 	AVehicle* LocalVehicle = LocalVehicles[0];
 	
 	LocalOA.Execute(LocalVehicle->GetSteeringBehaviors());
