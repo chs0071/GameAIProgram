@@ -3,7 +3,6 @@
 #include "EngineUtils.h"
 #include "TargetActor.h"
 #include "Editor/EditorEngine.h"
-#include "Steer/SteeringBehaviors.h"
 #include "Steer/Calculator/ObstacleAvoidance.h"
 #include "Vehicle/Vehicle.h"
 
