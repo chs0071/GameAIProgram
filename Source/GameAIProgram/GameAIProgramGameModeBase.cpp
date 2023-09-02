@@ -13,9 +13,9 @@ UWorld* GetWorld()
 	return LocalCurrentWorld->World();
 }
 
-namespace TestCallReflectionFunction
+namespace GameAIProgramGameModeBase
 {
-	inline TArray<AVehicle*> GetVehicles()
+	TArray<AVehicle*> GetVehicles()
 	{
 		TArray<AVehicle*> Result;
 
@@ -34,7 +34,7 @@ namespace TestCallReflectionFunction
 void AGameAIProgramGameModeBase::SetTarget()
 {
 	TMap<FName, AVehicle*> LocalFindVehicle;
-	TArray<AVehicle*> LocalVehicles = TestCallReflectionFunction::GetVehicles();
+	TArray<AVehicle*> LocalVehicles = GameAIProgramGameModeBase::GetVehicles();
 
 	for (AVehicle* Element : LocalVehicles)
 	{

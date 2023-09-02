@@ -18,7 +18,7 @@ inline ATargetActor* GetTargetActor()
 
 namespace TestCallReflectionFunction
 {
-	inline TArray<AVehicle*> GetVehicles()
+	TArray<AVehicle*> GetVehicles()
 	{
 		TArray<AVehicle*> Result;
 		FWorldContext* LocalCurrentWorld = Cast<UEditorEngine>(GEngine)->GetPIEWorldContext();
