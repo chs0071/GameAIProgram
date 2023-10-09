@@ -22,7 +22,7 @@ TMap<int32, TSharedPtr<ISteeringBehaviorsCalculator>> Calculator::sBehaviorsCalc
 		TPair<int32, TSharedPtr<ISteeringBehaviorsCalculator>>(static_cast<int32>(EBehaviorType::Obstacle_Avoidance), MakeShareable(new ObstacleAvoidance())),
 	};
 
-FVector2d Calculator::Calculate(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
+FVector2d Calculator::Calculate(const TWeakPtr<FSteeringBehaviors>& InCalculateTarget)
 {
 	GameAI::FVector2d LocalSteeringForce{};
 	if (InCalculateTarget.IsValid() == false)
@@ -44,7 +44,7 @@ FVector2d Calculator::Calculate(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
 	return LocalSteeringForce;
 }
 
-FVector2d Calculator::CalculateWeightedSum(TWeakPtr<FSteeringBehaviors> InCalculateTarget)
+FVector2d Calculator::CalculateWeightedSum(const TWeakPtr<FSteeringBehaviors>& InCalculateTarget)
 {
 	FVector2d Result;
 
@@ -96,8 +96,8 @@ FVector2d Calculator::CalculatePrioritized(TWeakPtr<FSteeringBehaviors> InCalcul
 		static_cast<int32>(EBehaviorType::Flock),
 		static_cast<int32>(EBehaviorType::OffsetPursuit),
 		};
-	
-	FVector2d Result;
+
+	const FVector2d Result;
 	return Result;
 }
 
@@ -122,12 +122,12 @@ FVector2d Calculator::CalculateDithered(TWeakPtr<FSteeringBehaviors> InCalculate
 		static_cast<int32>(EBehaviorType::Flock),
 		static_cast<int32>(EBehaviorType::OffsetPursuit),
 		};
-	
-	FVector2d Result;
+
+	const FVector2d Result;
 	return Result;
 }
 
-TArray<TWeakPtr<ISteeringBehaviorsCalculator>> Calculator::GetOnFlagCalculateBehaviorType(TWeakPtr<FSteeringBehaviors> InCalculateTarget, TArray<int32>& InIteratorArray)
+TArray<TWeakPtr<ISteeringBehaviorsCalculator>> Calculator::GetOnFlagCalculateBehaviorType(const TWeakPtr<FSteeringBehaviors>& InCalculateTarget, TArray<int32>& InIteratorArray)
 {
 	TArray<TWeakPtr<ISteeringBehaviorsCalculator>> Result;
 
@@ -135,7 +135,7 @@ TArray<TWeakPtr<ISteeringBehaviorsCalculator>> Calculator::GetOnFlagCalculateBeh
 	{
 		if (InCalculateTarget.Pin()->OnBehaviorCalculateFlag(Element))
 		{
-			auto BehaviorsCalculatorPtr = sBehaviorsCalculatorContainer.Find(Element);
+			const auto BehaviorsCalculatorPtr = sBehaviorsCalculatorContainer.Find(Element);
 
 			if (BehaviorsCalculatorPtr == nullptr)
 				continue;
