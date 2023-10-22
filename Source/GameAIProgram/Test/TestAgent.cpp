@@ -46,7 +46,6 @@ bool FTestCallReflectionFunction::RunTest(const FString& Parameters)
 
 	TArray<AVehicle*> LocalVehicles = TestCallReflectionFunction::GetVehicles();
 	AVehicle* LocalVehicle = LocalVehicles[0];
-	int a = 0;
 	
 	LocalOA.Execute(LocalVehicle->GetSteeringBehaviors());
 	

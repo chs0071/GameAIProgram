@@ -1,10 +1,9 @@
 ﻿#pragma once
-#include "Actor/AIActorBase.h"
 #include "Define/Vector2d.h"
 #include "BaseGameEntity.generated.h"
 
 UCLASS()
-class ABaseGameEntity : public AAIActorBase
+class ABaseGameEntity : public AActor
 {
 	GENERATED_BODY()
 public:
@@ -15,6 +14,15 @@ public:
 	
 public:
 	int32 GetID() const;
+	FVector GetPos() const;
+	FVector2d GetPos2d() const;
+	void SetPos(const FVector& InPos);
+	float GetScale() const;
+
+	void AddPos(const FVector2d& InPos);
+	GameAI::FVector2d GetRotation();
+	void SetRotation(const GameAI::FVector2d& InUpdateRotation);
+
 	bool IsTaged() const { return m_IsTag; }
 	void Tag() { m_IsTag = true; }
 	void UnTag() { m_IsTag = false; }

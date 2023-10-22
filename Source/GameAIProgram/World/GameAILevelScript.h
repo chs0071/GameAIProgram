@@ -14,6 +14,4 @@ class GAMEAIPROGRAM_API AGameAILevelScript : public ALevelScriptActor
 public:
 	UFUNCTION(BlueprintImplementableEvent)
 	TArray<ABaseGameEntity*> GetObtacles() const;
-	UFUNCTION(BlueprintImplementableEvent)
-	TArray<AUWallBase*> GetWalls() const;
 };
