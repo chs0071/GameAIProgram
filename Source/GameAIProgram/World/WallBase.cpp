@@ -7,21 +7,24 @@ AUWallBase::AUWallBase(const FObjectInitializer& ObjectInitializer)
 	if (WallMesh)
 	{
 		WallMesh->SetIsVisualizationComponent(true);
-		WallMesh->SetupAttachment(RootComponent);
-
 	}
 }
 
 FVector2d AUWallBase::GetFrom() const
 {
-	return GetPos2d();
+	float WallLengthHalf = WallLength / 2;
+	const FVector2d& From = GetPos2d();
+	const FVector2d& FromDirection = GetRotation() * -1;
+	const FVector2d& Result = From + FromDirection * WallLengthHalf;
+	return Result;
 }
 
 FVector2d AUWallBase::GetTo() const
 {
-	const FVector2d& From = GetFrom();
-	const FVector2d& Forward = GetRotation();
-	const FVector2d& Result = From + Forward * WallLength;
+	float WallLengthHalf = WallLength / 2;
+	const FVector2d& From = GetPos2d();
+	const FVector2d& ToDirection = GetRotation();
+	const FVector2d& Result = From + ToDirection * WallLengthHalf;
 	return Result;
 }
 
@@ -56,9 +59,9 @@ void AUWallBase::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEv
 
 	if (WallMesh)
 	{
-		FBoxSphereBounds LocalBounds = WallMesh->Bounds;
-		LocalBounds.BoxExtent.X = WallLength;
-		WallMesh->Bounds = LocalBounds;
+		FVector Scale = WallMesh->GetRelativeScale3D();
+		Scale.X = WallLength * 0.01f;
+		WallMesh->SetRelativeScale3D(Scale);
 	}
 
 }
