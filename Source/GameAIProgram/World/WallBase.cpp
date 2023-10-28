@@ -1,5 +1,17 @@
 ﻿#include "WallBase.h"
 
+AUWallBase::AUWallBase(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	WallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WallMeshComponent"));
+	if (WallMesh)
+	{
+		WallMesh->SetIsVisualizationComponent(true);
+		WallMesh->SetupAttachment(RootComponent);
+
+	}
+}
+
 FVector2d AUWallBase::GetFrom() const
 {
 	return GetPos2d();
@@ -36,4 +48,17 @@ FVector2d AUWallBase::GetReverseNormal()
 bool AUWallBase::IsActorInnerWall()
 {
 	return true;
+}
+
+void AUWallBase::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+{
+	Super::PostEditChangeProperty(PropertyChangedEvent);
+
+	if (WallMesh)
+	{
+		FBoxSphereBounds LocalBounds = WallMesh->Bounds;
+		LocalBounds.BoxExtent.X = WallLength;
+		WallMesh->Bounds = LocalBounds;
+	}
+
 }
